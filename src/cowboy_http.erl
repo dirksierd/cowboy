@@ -641,7 +641,7 @@ parse_hd_before_value(<< $\s, Rest/bits >>, S, H, N) ->
 parse_hd_before_value(<< $\t, Rest/bits >>, S, H, N) ->
 	parse_hd_before_value(Rest, S, H, N);
 parse_hd_before_value(Buffer, State=#state{opts=Opts, in_state=PS}, H, N) ->
-	MaxLength = maps:get(max_header_value_length, Opts, 4096),
+	MaxLength = maps:get(max_header_value_length, Opts, 8192),
 	case match_eol(Buffer, 0) of
 		nomatch when byte_size(Buffer) > MaxLength ->
 			error_terminate(431, State#state{in_state=PS#ps_header{headers=H}},
